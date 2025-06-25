@@ -1,0 +1,9 @@
+{
+	"name": "adfnetflixanamika",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "9ba311c9-8a96-4957-9524-b319201dacec",
+		"tenantId": "71ba6758-d25b-4469-952d-be595f777059"
+	}
+}
