@@ -1,0 +1,83 @@
+{
+  "name": "New Job Jul 11, 2025, 12:29 AM",
+  "email_notifications": {
+    "no_alert_for_skipped_runs": false
+  },
+  "webhook_notifications": {},
+  "timeout_seconds": 0,
+  "max_concurrent_runs": 1,
+  "tasks": [
+    {
+      "task_key": "Weekday_Lookup",
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Workspace/Users/hansraj.oct77@gmail.com/Netflix-Project-ADF-Databricks/Notebooks/5_Lookup_Notebook",
+        "base_parameters": {
+          "weekday": "{{job.start_time.iso_weekday}}"
+        },
+        "source": "WORKSPACE"
+      },
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "webhook_notifications": {}
+    },
+    {
+      "task_key": "If_Week_day",
+      "depends_on": [
+        {
+          "task_key": "Weekday_Lookup"
+        }
+      ],
+      "run_if": "ALL_SUCCESS",
+      "condition_task": {
+        "op": "EQUAL_TO",
+        "left": "{{tasks.Weekday_Lookup.values.weekday_output}}",
+        "right": "6"
+      },
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "webhook_notifications": {}
+    },
+    {
+      "task_key": "Silver_Master_data",
+      "depends_on": [
+        {
+          "task_key": "If_Week_day",
+          "outcome": "true"
+        }
+      ],
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Workspace/Users/hansraj.oct77@gmail.com/Netflix-Project-ADF-Databricks/Notebooks/Notebook_4_Silver",
+        "source": "WORKSPACE"
+      },
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "webhook_notifications": {}
+    },
+    {
+      "task_key": "False_Notebook",
+      "depends_on": [
+        {
+          "task_key": "If_Week_day",
+          "outcome": "false"
+        }
+      ],
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Workspace/Users/hansraj.oct77@gmail.com/Netflix-Project-ADF-Databricks/Notebooks/False_condition_notebook",
+        "source": "WORKSPACE"
+      },
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "webhook_notifications": {}
+    }
+  ],
+  "queue": {
+    "enabled": true
+  },
+  "performance_target": "STANDARD",
+  "run_as": {
+    "user_name": "hansraj.oct77@gmail.com"
+  }
+}
