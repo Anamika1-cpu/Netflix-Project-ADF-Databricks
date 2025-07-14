@@ -1,0 +1,64 @@
+{
+  "name": "Raw_to_Silver_Pipeline",
+  "email_notifications": {
+    "no_alert_for_skipped_runs": false
+  },
+  "webhook_notifications": {},
+  "timeout_seconds": 0,
+  "max_concurrent_runs": 1,
+  "tasks": [
+    {
+      "task_key": "Lookup_Locations",
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Workspace/Users/hansraj.oct77@gmail.com/Netflix-Project-ADF-Databricks/Notebooks/3_Lookup",
+        "source": "WORKSPACE"
+      },
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "webhook_notifications": {}
+    },
+    {
+      "task_key": "Silver_Notebook",
+      "depends_on": [
+        {
+          "task_key": "Lookup_Locations"
+        }
+      ],
+      "run_if": "ALL_SUCCESS",
+      "for_each_task": {
+        "inputs": "{{tasks.Lookup_Locations.values.my_arr}}",
+        "task": {
+          "task_key": "Silver_Notebook_iteration",
+          "run_if": "ALL_SUCCESS",
+          "notebook_task": {
+            "notebook_path": "/Workspace/Users/hansraj.oct77@gmail.com/Netflix-Project-ADF-Databricks/Notebooks/2_Silver",
+            "base_parameters": {
+              "sourcecfolder": "{{input.sourcefolder}}",
+              "targetfolder": "{{input.targetfolder}}"
+            },
+            "source": "WORKSPACE"
+          },
+          "timeout_seconds": 0,
+          "email_notifications": {},
+          "webhook_notifications": {}
+        }
+      },
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "webhook_notifications": {}
+    }
+  ],
+  "git_source": {
+    "git_url": "https://github.com/Anamika1-cpu/Netflix-Project-ADF-Databricks",
+    "git_provider": "gitHub",
+    "git_commit": "master"
+  },
+  "queue": {
+    "enabled": true
+  },
+  "performance_target": "PERFORMANCE_OPTIMIZED",
+  "run_as": {
+    "user_name": "hansraj.oct77@gmail.com"
+  }
+}
