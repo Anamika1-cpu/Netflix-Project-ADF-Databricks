@@ -4,7 +4,7 @@
 This project showcases a complete end-to-end data engineering solution using Azure services, emphasizing dynamic pipeline orchestration, real-time data ingestion, and seamless integration with Power BI for interactive analytics.
 
 # Architecture
-<img src='https://github.com/Anamika1-cpu/Netflix-Project-ADF-Databricks/blob/aee4fb189d601c2199337606166b3240243c6fb7/Netflix_Project%20Architecture.drawio%20(1).png'/>
+<img src='https://github.com/Anamika1-cpu/Netflix-Project-ADF-Databricks/blob/master/Netflix_Project%20Architecture.drawio%20(1).drawio.png'/>
 # Highlights
 <li>Designed and implemented dynamic ingestion pipelines in Azure Data Factory and Databricks to automate raw file ingestion into ADLS Gen2, applying consistent file naming conventions and schema structures for scalable processing.
 <li>Configured external locations and storage credentials in Unity Catalog to ensure secure, governed access to data lakes across staging and production environments.
